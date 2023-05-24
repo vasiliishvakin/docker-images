@@ -1,15 +1,21 @@
-FROM php:5.6-fpm-stretch
+FROM vasiliishavkin/php:5.6-fpm
 
 LABEL maintainer="Vasilii Shvakin <vasilii.shvakin@gmail.com>"
 
-RUN ln -snf /usr/share/zoneinfo/UTC /etc/localtime && echo UTC > /etc/timezone
+RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install graphviz ssh mc htop tmux nano colordiff gnupg
 
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions gd mysqli pdo_mysql bcmath gmp bz2 intl xsl
+RUN install-php-extensions xdebug
 
-RUN apt-get -y update; apt-get -y upgrade && apt-get -y dist-upgrade && apt-get -y install procps wget curl ca-certificates iputils-ping dnsutils moreutils ffmpeg imagemagick graphviz ssh mc htop tmux nano colordiff gnupg
+RUN echo "xdebug.mode=develop,coverage,debug,profile;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host = host.docker.internal;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.start_with_request = trigger;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.profiler_output_name=cachegrind.out.%t;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.output_dir = /var/lib/php/profiling;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-RUN update-ca-certificates
+RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
+
+RUN wget -O graph-composer.phar https://clue.engineering/graph-composer-latest.phar && chmod +x graph-composer.phar && mv graph-composer.phar /usr/local/bin/graph-composer
 
 RUN rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
