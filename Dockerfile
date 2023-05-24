@@ -1,9 +1,10 @@
 FROM vasiliishavkin/php:8.2-fpm
 
 LABEL maintainer="Vasilii Shvakin <vasilii.shvakin@gmail.com>"
-MAINTAINER Vasilii Shvakin <vasilii.shvakin@gmail.com>
 
-RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install graphviz ssh mc
+RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install procps wget curl ca-certificates iputils-ping bind9-dnsutils moreutils ffmpeg imagemagick graphviz ssh mc htop tmux nano colordiff gnupg
+
+RUN update-ca-certificates
 
 RUN install-php-extensions xdebug
 
@@ -18,3 +19,5 @@ RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-di
 RUN wget -O graph-composer.phar https://clue.engineering/graph-composer-latest.phar && chmod +x graph-composer.phar && mv graph-composer.phar /usr/local/bin/graph-composer
 
 RUN rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
