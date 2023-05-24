@@ -1,7 +1,6 @@
 FROM php:8.2-fpm-bullseye
 
 LABEL maintainer="Vasilii Shvakin <vasilii.shvakin@gmail.com>"
-MAINTAINER Vasilii Shvakin <vasilii.shvakin@gmail.com>
 
 RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install procps wget curl ca-certificates iputils-ping bind9-dnsutils moreutils ffmpeg imagemagick
 
