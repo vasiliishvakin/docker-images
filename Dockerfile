@@ -3,7 +3,9 @@ FROM php:8.2-fpm-bullseye
 LABEL maintainer="Vasilii Shvakin <vasilii.shvakin@gmail.com>"
 MAINTAINER Vasilii Shvakin <vasilii.shvakin@gmail.com>
 
-RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install procps wget curl ca-certificates iputils-ping bind9-dnsutils
+RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install procps wget curl ca-certificates iputils-ping bind9-dnsutils moreutils ffmpeg imagemagick
+
+RUN update-ca-certificates
 
 RUN ln -snf /usr/share/zoneinfo/UTC /etc/localtime && echo UTC > /etc/timezone
 
@@ -15,3 +17,5 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     install-php-extensions gd pdo_mysql redis apcu imagick yaml igbinary mbstring xml bcmath gmp decimal bz2 curl intl opcache xsl zip msgpack
 
 RUN rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
