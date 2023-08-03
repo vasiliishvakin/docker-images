@@ -1,19 +1,43 @@
-FROM php:7.4-fpm-bullseye
+FROM vasiliishvakin/php:7.4-fpm
 
 LABEL maintainer="Vasilii Shvakin <vasilii.shvakin@gmail.com>"
 
-RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install procps wget curl ca-certificates iputils-ping fping moreutils imagemagick graphviz nano build-essential make &&\
-    update-ca-certificates &&\
-    ln -snf /usr/share/zoneinfo/UTC /etc/localtime && echo UTC > /etc/timezone
+RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install bind9-dnsutils colordiff dnsutils ffmpeg git gnupg htop mc ssh sudo tmux
 
-ADD https://github.com/gordalina/cachetool/releases/latest/download/cachetool.phar /usr/local/bin
-RUN chmod +x /usr/local/bin/cachetool.phar && mv /usr/local/bin/cachetool.phar /usr/local/bin/cachetool
+COPY ./php-fpm.d/www.conf /usr/local/etc/php-fpm.d/
+COPY  ./conf.d/zz-01-default.ini /usr/local/etc/php/conf.d/
 
-ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
-RUN chmod +x /usr/local/bin/install-php-extensions && \
-    install-php-extensions apcu bcmath bz2 curl decimal ds exif gd gettext gmp imagick imap intl mbstring mongodb msgpack mysqli opcache pcntl pdo pdo-mysql redis sockets xml xsl yaml zip
+#nodejs
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - &&\
+    apt-get install -y nodejs &&\
+    npm install -g nodemon typescript ts-node eslint prettier
 
-RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
+#vscode-server
+RUN curl -fsSL https://code-server.dev/install.sh | sh \
+    && code-server --install-extension bierner.markdown-mermaid \
+    && code-server --install-extension bmewburn.vscode-intelephense-client \
+    && code-server --install-extension christian-kohler.path-intellisense \
+    && code-server --install-extension dbaeumer.vscode-eslint \
+    && code-server --install-extension DEVSENSE.composer-php-vscode \
+    && code-server --install-extension DEVSENSE.profiler-php-vscode \
+    && code-server --install-extension esbenp.prettier-vscode \
+    && code-server --install-extension neilbrayfield.php-docblocker \
+    && code-server --install-extension open-southeners.php-support-utils \
+    && code-server --install-extension rvest.vs-code-prettier-eslint \
+    && code-server --install-extension sleistner.vscode-fileutils \
+    && code-server --install-extension streetsidesoftware.code-spell-checker \
+    && code-server --install-extension xdebug.php-debug
+
+#composer
+RUN wget -O graph-composer.phar https://clue.engineering/graph-composer-latest.phar && chmod +x graph-composer.phar && mv graph-composer.phar /usr/local/bin/graph-composer
+
+#xdebug
+RUN install-php-extensions xdebug \
+    && echo "xdebug.mode=develop,coverage,debug,profile;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.client_host = localhost;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.start_with_request = trigger;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.profiler_output_name=cachegrind.out.%t;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.output_dir = /var/lib/php/profiling;" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
