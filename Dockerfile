@@ -32,23 +32,6 @@ RUN wget https://mega.nz/linux/repo/Debian_11/amd64/megacmd-Debian_11_amd64.deb 
     rm /etc/apt/sources.list.d/megasync.list && \
     apt-get update
 
-#vscode-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh \
-    && code-server --install-extension bierner.markdown-mermaid \
-    && code-server --install-extension bmewburn.vscode-intelephense-client \
-    && code-server --install-extension christian-kohler.path-intellisense \
-    && code-server --install-extension dbaeumer.vscode-eslint \
-    && code-server --install-extension DEVSENSE.composer-php-vscode \
-    && code-server --install-extension DEVSENSE.profiler-php-vscode \
-    && code-server --install-extension esbenp.prettier-vscode \
-    && code-server --install-extension neilbrayfield.php-docblocker \
-    && code-server --install-extension open-southeners.php-support-utils \
-    && code-server --install-extension rvest.vs-code-prettier-eslint \
-    && code-server --install-extension sleistner.vscode-fileutils \
-    && code-server --install-extension streetsidesoftware.code-spell-checker \
-    && code-server --install-extension xdebug.php-debug \
-    && code-server --install-extension ms-azuretools.vscode-docker
-
 #graph-composer
 RUN wget -O graph-composer.phar https://clue.engineering/graph-composer-latest.phar && chmod +x graph-composer.phar && mv graph-composer.phar /usr/local/bin/graph-composer
 
