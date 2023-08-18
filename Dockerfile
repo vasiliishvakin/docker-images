@@ -2,7 +2,7 @@ FROM python:3-bullseye
 
 LABEL maintainer="Vasilii Shvakin <vasilii.shvakin@gmail.com>"
 
-RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install bind9-dnsutils colordiff dnsutils ffmpeg git gnupg htop mc ssh sudo tmux links2
+RUN apt-get update && apt-get -y dist-upgrade && apt-get -y install bind9-dnsutils ca-certificates colordiff curl ffmpeg git gnupg graphviz htop imagemagick iputils-ping links2 mc moreutils nano procps ssh sudo tmux wget
 
 RUN pip3 install --upgrade pip
 
@@ -33,18 +33,6 @@ RUN wget https://mega.nz/linux/repo/Debian_11/amd64/megacmd-Debian_11_amd64.deb 
     rm megacmd-Debian_11_amd64.deb  && \
     rm /etc/apt/sources.list.d/megasync.list && \
     apt-get update
-
-#vscode-server
-RUN curl -fsSL https://code-server.dev/install.sh | sh \
-    && code-server --install-extension bierner.markdown-mermaid \
-    && code-server --install-extension dbaeumer.vscode-eslint \
-    && code-server --install-extension DEVSENSE.composer-php-vscode \
-    && code-server --install-extension esbenp.prettier-vscode \
-    && code-server --install-extension ms-azuretools.vscode-docker \
-    && code-server --install-extension rvest.vs-code-prettier-eslint \
-    && code-server --install-extension sleistner.vscode-fileutils \
-    && code-server --install-extension streetsidesoftware.code-spell-checker \
-    && code-server --install-extension ms-python.python
 
 RUN apt-get -y dist-upgrade && apt-get clean && rm -rf /var/lib/apt/lists/*
 
