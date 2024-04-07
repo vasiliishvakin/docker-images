@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-bullseye
+FROM php:8.2-fpm-bullseye
 
 LABEL maintainer="Vasilii Shvakin <vasilii.shvakin@gmail.com>"
 
