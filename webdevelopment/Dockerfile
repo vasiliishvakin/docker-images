@@ -39,7 +39,7 @@ RUN chmod +x /usr/local/bin/cachetool.phar && mv /usr/local/bin/cachetool.phar /
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
-RUN chmod +x /usr/local/bin/install-php-extensions && install-php-extensions amqp gd sqlite3 mysqlnd "pdo_mysql" "pdo_pgsql" imap opcache apcu decimal ds event exif gettext gmp imagick intl lz4 mbstring mongodb msgpack redis simdjson sockets xml xsl yaml zip zstd
+RUN chmod +x /usr/local/bin/install-php-extensions && install-php-extensions amqp gd sqlite3 mysqli mysqlnd "pdo_mysql" "pdo_pgsql" imap opcache apcu decimal ds event exif gettext gmp imagick intl lz4 mbstring mongodb msgpack redis simdjson sockets xml xsl yaml zip zstd
 
 RUN php -r "readfile('http://getcomposer.org/installer');" | php -- --install-dir=/usr/bin/ --filename=composer
 
@@ -53,6 +53,13 @@ RUN install-php-extensions xdebug \
 
 #graph-composer
 RUN wget -O graph-composer.phar https://clue.engineering/graph-composer-latest.phar && chmod +x graph-composer.phar && mv graph-composer.phar /usr/local/bin/graph-composer
+
+#phpmyadmin
+RUN wget https://files.phpmyadmin.net/phpMyAdmin/5.2.1/phpMyAdmin-5.2.1-all-languages.tar.gz &&\
+    tar -xzf phpMyAdmin-5.2.1-all-languages.tar.gz &&\
+    mv phpMyAdmin-5.2.1-all-languages /usr/share/phpmyadmin &&\
+    rm phpMyAdmin-5.2.1-all-languages.tar.gz
+COPY ./phpmyadmin/config.inc.php /usr/share/phpmyadmin/config.inc.php
 
 #nodejs
 RUN curl -fsSL https://deb.nodesource.com/setup_21.x | bash - &&\

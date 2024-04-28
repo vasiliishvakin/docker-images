@@ -1,7 +1,7 @@
 version: "3"
 services:
     devsrv:
-        image: vasiliishvakin/webdevelopment:v1.0
+        image: vasiliishvakin/webdevelopment:v1.1
         container_name: ${COMPOSE_PROJECT_NAME}_devsrv
         networks:
             default:
