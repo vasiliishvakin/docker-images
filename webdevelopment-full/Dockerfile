@@ -1,5 +1,4 @@
 #
-
 FROM php:8.3-fpm-bookworm
 
 LABEL maintainer="Vasilii Shvakin <vasilii.shvakin@gmail.com>"
@@ -10,7 +9,8 @@ RUN apt-get update && apt-get -y dist-upgrade &&\
     software-properties-common python3 apt-transport-https \
     gnupg2 ca-certificates lsb-release debian-archive-keyring \
     bash-completion \
-    supervisor
+    supervisor \
+    default-jdk
 
 RUN  update-ca-certificates && ln -snf /usr/share/zoneinfo/UTC /etc/localtime && echo UTC > /etc/timezone
 

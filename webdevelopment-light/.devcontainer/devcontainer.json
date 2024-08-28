@@ -1,0 +1,55 @@
+{
+    "name": "webdevelopment",
+    "dockerComposeFile": "./compose.yaml",
+    "service": "devsrv",
+    "workspaceFolder": "/workspace",
+    "remoteEnv": {
+        "compose": "docker compose"
+    },
+    "shutdownAction": "stopCompose",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "alefragnani.Bookmarks",
+                "bierner.markdown-mermaid",
+                "bmewburn.vscode-intelephense-client",
+                "bradlc.vscode-tailwindcss",
+                "christian-kohler.path-intellisense",
+                "codezombiech.gitignore",
+                "dbaeumer.vscode-eslint",
+                "DEVSENSE.composer-php-vscode",
+                "dotenv.dotenv-vscode",
+                "eamodio.gitlens",
+                "EditorConfig.EditorConfig",
+                "esbenp.prettier-vscode",
+                "Gruntfuggly.todo-tree",
+                "howardzuo.vscode-favorites",
+                "jasonlhy.hungry-delete",
+                "marlom.keep-context",
+                "matthewpi.caddyfile-support",
+                "micnil.vscode-checkpoints",
+                "ms-azuretools.vscode-docker",
+                "naumovs.color-highlight",
+                "neilbrayfield.php-docblocker",
+                "oderwat.indent-rainbow",
+                "onecentlin.laravel-blade",
+                "redhat.vscode-xml",
+                "redhat.vscode-yaml",
+                "runtfuggly.todo-tree",
+                "rvest.vs-code-prettier-eslint",
+                "streetsidesoftware.code-spell-checker-hebrew",
+                "streetsidesoftware.code-spell-checker-russian",
+                "streetsidesoftware.code-spell-checker-scientific-terms",
+                "streetsidesoftware.code-spell-checker",
+                "Tyriar.sort-lines",
+                "VisualStudioExptTeam.intellicode-api-usage-examples",
+                "VisualStudioExptTeam.vscodeintellicode-completions",
+                "VisualStudioExptTeam.vscodeintellicode",
+                "WakaTime.vscode-wakatime",
+                "xdebug.php-debug",
+                "yzhang.markdown-all-in-one",
+                "ZainChen.json"
+            ]
+        }
+    }
+}
