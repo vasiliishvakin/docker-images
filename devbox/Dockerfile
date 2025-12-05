@@ -81,6 +81,13 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y --no-install
     zip \
     patch \
     strace \
+    # Image optimizers
+    jpegoptim \
+    optipng \
+    pngquant \
+    gifsicle \
+    webp \
+    libavif-bin \
     # Languages
     golang-go \
     default-jdk \
@@ -196,7 +203,7 @@ RUN php -r "readfile('https://getcomposer.org/installer');" | php -- --install-d
 # Install Node.js and global packages
 RUN curl -fsSL https://deb.nodesource.com/setup_25.x | bash - \
     && apt-get install -y --no-install-recommends nodejs \
-    && npm install -g nodemon typescript ts-node eslint prettier \
+    && npm install -g nodemon typescript ts-node eslint prettier svgo \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Python packages
