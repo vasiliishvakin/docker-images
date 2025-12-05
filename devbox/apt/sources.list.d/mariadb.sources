@@ -1,0 +1,11 @@
+# MariaDB 12.2 repository list - created 2025-12-04 20:45 UTC
+# https://mariadb.org/download/
+X-Repolib-Name: MariaDB
+Types: deb
+# deb.mariadb.org is a dynamic mirror if your preferred mirror goes offline. See https://mariadb.org/mirrorbits/ for details.
+# URIs: https://deb.mariadb.org/12.rc/debian
+URIs: https://deb.mariadb.org/12.2/debian
+Suites: debian
+Components: main
+Signed-By: /etc/apt/keyrings/mariadb-keyring.pgp
+
