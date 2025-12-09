@@ -81,6 +81,7 @@ RUN apt-get update && apt-get -y dist-upgrade && apt-get install -y --no-install
     zip \
     patch \
     strace \
+    tig  \
     # Image optimizers
     jpegoptim \
     optipng \
